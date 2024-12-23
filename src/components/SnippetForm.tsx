@@ -13,7 +13,7 @@ export default function SnippetEditForm({ snippet  } :SnippetEditFormProps) {
     const [code, setCode ] = useState(snippet.code)
 
     function handleEditorChange( value : string =""  ){ 
-        console.log(value)
+  
         setCode(value)
     } 
     const editSnippetAction = editSnippet.bind(null, snippet.id ,code)
