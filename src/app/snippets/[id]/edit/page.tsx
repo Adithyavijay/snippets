@@ -12,7 +12,6 @@ interface SnippetEditPageProps{
 export default async function snippetEditPage(props : SnippetEditPageProps){ 
     
         const { id } = await props.params ;
-        await new Promise( (r)=> setTimeout(r , 2000))
         const snippet = await db.snippet.findFirst({
             where : { id : parseInt(id)}
         }) 

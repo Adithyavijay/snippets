@@ -3,9 +3,17 @@ import * as actions from '@/actions';
 import { useActionState ,startTransition} from "react";
 
 
+interface FormState {
+  message ?: string ;
+  errors ?: {
+    title ?:string;
+    code ?:string;
+  }
+}
+
 export default function SnippetsPage(){  
     
-  const [formState , action] = useActionState(actions.createSnippet , { message : ""}) 
+  const [formState , action] = useActionState<FormState ,FormData>(actions.createSnippet , { }) 
   const handleSubmit=(e:React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault();
     startTransition(async()=>{ 
@@ -25,7 +33,8 @@ export default function SnippetsPage(){
         id="title"
         className="border rounded p-2 w-full"
         />
-        </div>
+        </div> 
+        { formState.errors?.title && <div className='text-red-500'>{formState.errors.title}</div>}
         <div className="flex gap-4 items-center">
         <label className="w-12">Code</label>
         <textarea
@@ -34,12 +43,14 @@ export default function SnippetsPage(){
         className="border rounded p-2 w-full"
         />
         </div> 
-        { formState && (<div> { formState.message}</div>)}
+        { formState.errors?.code && <div className='text-red-500'>{formState.errors.code}</div>}
+      
     <button type="submit" className="rounded p-2 bg-green-200">
         Create
     </button> 
-  
+    { formState && (<div className='text-green-500'> { formState.message}</div>)}
         </form>
         </div>
-    )
-}
+    ) 
+} 
+
